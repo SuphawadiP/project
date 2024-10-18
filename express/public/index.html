@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Data Display - Halloween Theme</title>
+    <style>
+        body {
+            font-family: 'Creepster', Arial, sans-serif; /* A spooky font for Halloween */
+            background-color: #1e1e1e; /* Dark background */
+            margin: 0;
+            padding: 20px;
+            color: #fff; /* White text for contrast */
+        }
+        h1 {
+            text-align: center;
+            color: #ff7518; /* Halloween orange for the title */
+            font-size: 3em;
+            text-shadow: 3px 3px 5px black;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #333; /* Dark container background */
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+        }
+        .data {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #444; /* Dark background for the data blocks */
+            border: 2px solid #ff7518; /* Halloween orange border */
+            border-radius: 8px;
+            color: #ffcc00; /* Yellow for data values */
+        }
+        .data-title {
+            font-weight: bold;
+            font-size: 1.4em;
+            color: #ff7518; /* Orange for titles */
+        }
+        .data-value {
+            font-size: 1.8em;
+        }
+        /* Add a fun Halloween-themed font */
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+    </style>
+</head>
+<body>
+    <h1>🎃 Sensor Data Display 🎃</h1>
+    <div class="container" id="dataContainer">
+        <div class="data">
+            <span class="data-title">Average BPM:</span>
+            <span class="data-value" id="avgBpm">Loading...</span>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = "7fRt29bQiQ1RADp3w7ScHtRJ8Tdrp9fQLE0IByFtXuZMtCARpUaPudVwZxn2z1RCf4ufxpRIpkl13tapFYM0afYrg5zzDWeQFG>
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:3300/sensor-data', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': Bearer ${API_KEY} // Pass the API key in the header
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+
+                // Update the HTML with the data
+                document.getElementById('avgBpm').innerText = data.avgBpm;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+          // Fetch data every 2 seconds
+        setInterval(fetchData, 2000);
+        fetchData(); // Initial fetch
+    </script>
+</body>
+</html>

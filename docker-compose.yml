@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  express:
+    build: ./express
+    volumes:
+      - ./express:/usr/src/app
+    networks:
+      - lab4-network
+    ports:
+      - "3300:3300"
+
+  mongodb:
+    image: mongo
+    networks:
+      - lab4-network
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  lab4-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
